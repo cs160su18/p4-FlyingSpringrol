@@ -1,36 +1,126 @@
 {% load static %}
-
 <!DOCTYPE html>
+
 <html>
+
 <head>
-    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-    <title>P4 Drawing</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+  <title>P4 Drawing</title>
 
-    <link rel="stylesheet" type="text/css" href="{% static 'draw/vendor/bootstrap/css/bootstrap.min.css' %}">
-    <script type="text/javascript" src="{% static 'draw/vendor/jquery/jquery-3.3.1.min.js' %}"></script>
-    <script type="text/javascript" src="{% static 'draw/vendor/paper/paper-full.min.js' %}"></script>
+  <link rel="stylesheet" type="text/css" href="{% static 'draw/vendor/bootstrap/css/bootstrap.min.css' %}">
+  <script type="text/javascript" src="{% static 'draw/vendor/jquery/jquery-3.3.1.min.js' %}"></script>
+  <script type="text/javascript" src="{% static 'draw/vendor/paper/paper-full.min.js' %}"></script>
 
-    <style type="text/css">
-    </style>
+  <style type="text/css">
+    canvas {
+      background-color: black;
+      width: 100vw;
+      height: 100vh;
+    }
+  </style>
 
 </head>
+
 <body>
-    <!-- You may change the dimensions of this canvas -->
-    <canvas id="myCanvas" width="750px" height="750px"></canvas>
+  <!-- You may change the dimensions of this canvas -->
+  <canvas id="myCanvas"></canvas>
 </body>
 <script>
+  // setting up the canvas and one paper tool
+  var canvas = document.getElementById('myCanvas');
+  var myID = (Math.random() * 999999).toFixed();
 
-    // setting up the canvas and one paper tool
-    var canvas = document.getElementById('myCanvas');
-    paper.setup(canvas);
-    var tool = new paper.Tool();
+  paper.setup(canvas);
+  var tool = new paper.Tool();
 
-    // getting the URL (you may want to use for Exercise 3)
-    var url = window.location.href;
+  var path = new paper.Path();
+  var opened;
 
-    // var socket = new WebSocket(
-    //     'ws://your url here:8765/');
+  var myColor = '#' + (Math.random() * 0xFFFFFF << 0).toString(16);
+  tool.onMouseDown = function(event) {
+
+    path.strokeColor = myColor;
+    path.strokeWidth = 10;
+    path.add(event.point);
+  }
+
+  tool.onMouseDrag = function(event) {
+    path.add(event.point);
+    var message = {
+      x: event.point.x,
+      y: event.point.y,
+      id: myID,
+      color: myColor,
+    };
+    if (opened) {
+      socket.send(JSON.stringify(message));
+    }
+  }
 
 
+
+
+  // getting the URL (you may want to use for Exercise 3)
+  var url = window.location.href;
+  var socket = new WebSocket("ws://p4-flyingspringrol-aronowb14191029.codeanyapp.com:8765/draw");
+  var seens = {};
+
+  // triggered when receiving a message from the server
+  socket.onmessage = function(receivedMessage) {
+    // do something when you receive a message
+    var data = JSON.parse(receivedMessage.data);
+    var parsed_id = parseInt(data.id);
+    if (!url.includes("?size=small")) {
+      if (parsed_id != myID) {
+        if (seens[parsed_id] == undefined) {
+          var newPath = new paper.Path();
+          newPath.strokeColor = data.color;
+          newPath.strokeWidth = 10;
+          seens[parsed_id] = newPath;
+        } else {
+          //exists in seen
+          var point = new paper.Point(parseFloat(data.x), parseFloat(data.y));
+          seens[parsed_id].strokeColor = data.color;
+          seens[parsed_id].add(point);
+        }
+      }
+
+
+    }
+
+
+  };
+
+  // use when sending a message to the server
+  // to be broadcasted to all clients
+  socket.onopen = function(evt) {
+    opened = true;
+    console.log("opened");
+  }
+
+  // notify console if socket closes unexpectedly
+  socket.onclose = function(e) {
+    console.error('Chat socket closed unexpectedly');
+  };
+
+  window.addEventListener('devicemotion', function(event) {
+    //shake event
+    var thresh = 20;
+    var accel = event.acceleration.x + event.acceleration.y + event.acceleration.z;
+    if (accel > thresh) {
+      var len = paper.project.activeLayer.children.length;
+      if (len >= 1) {
+        paper.project.activeLayer.removeChildren(0, len);
+        path = new paper.Path();
+      }
+    }
+
+    if (event.acceleration.x > 1) {
+      //randomly change color on x accelerations
+      myColor = '#' + (Math.random() * 0xFFFFFF << 0).toString(16);
+      path.color = myColor;
+    }
+  });
 </script>
+
 </html>
