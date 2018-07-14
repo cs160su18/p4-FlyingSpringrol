@@ -5,6 +5,12 @@ import json
 def index(request):
     return render(request, 'draw/index.html', {})
 
+def webform(request):
+    return render(request, 'draw/webform.html', {})
+  
+def dna(request):
+    return render(request, 'draw/dna.html', {})
+
 def room(request, room_name):
     return render(request, 'draw/room.html', {
         'room_name_json': mark_safe(json.dumps(room_name))
