@@ -1,0 +1,54 @@
+<!-- THIS ONE MUST BE THE TOP SCRIPT IN THE FILE inside the head-->
+<script src="https://www.gstatic.com/firebasejs/5.2.0/firebase.js"></script>
+
+
+<!-- The rest can be at the bottom -->
+<script>
+  // Initialize Firebase
+  var config = {
+    apiKey: "AIzaSyDckkwG6JQpxVkGC-_X3GT8XUAfJLFVjDE",
+    authDomain: "humandna-50eb9.firebaseapp.com",
+    databaseURL: "https://humandna-50eb9.firebaseio.com",
+    projectId: "humandna-50eb9",
+    storageBucket: "",
+    messagingSenderId: "5471503000"
+  };
+  firebase.initializeApp(config);
+</script>
+<script>
+//********THIS IS HOW TO GET UPDATES WHEN THEY COME
+  //****it automatically notifies you*****
+  var firebaseRefSecret = firebase.database().ref().child("secrets/");
+  var firebaseRefFears = firebase.database().ref().child("fears/");
+  var firebaseRefHopes = firebase.database().ref().child("hopes/");
+  var firebaseRefHappiness = firebase.database().ref().child("happiness/");
+  
+  
+  //one time query
+  firebaseRefSecret.once('value', function (snap) {
+    console.log(snap.val());
+  });
+  firebaseRefFears.once('value', function (snap) {
+    console.log(snap.val());
+  });
+  firebaseRefHopes.once('value', function (snap) {
+    console.log(snap.val());
+  });
+  firebaseRefHappiness.once('value', function (snap) {
+    console.log(snap.val());
+  });
+  
+  //Listens for changes
+  firebaseRefSecret.on('value', function (snap) {
+    console.log(snap.val());
+  });
+  firebaseRefFears.on('value', function (snap) {
+    console.log(snap.val());
+  });
+  firebaseRefHopes.on('value', function (snap) {
+    console.log(snap.val());
+  });
+  firebaseRefHappiness.on('value', function (snap) {
+    console.log(snap.val());
+  });
+</script>

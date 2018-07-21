@@ -1,98 +1,156 @@
 <!DOCTYPE html>
 <html>
+
 <head>
-    <title>webform</title>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <script src="https://www.gstatic.com/firebasejs/5.2.0/firebase.js"></script>
-    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
-            integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
-            crossorigin="anonymous"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
-            integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
-            crossorigin="anonymous"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
-            integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
-            crossorigin="anonymous"></script>
-    <script src="js/three.min.js"></script>
-    <script src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/9353/Detector.js"></script>
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-    <script type="text/javascript" src="index.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/5.2.0/firebase.js"></script>
-    <link rel="stylesheet"
-          href="https://fonts.googleapis.com/css?family=Tangerine">
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
-          integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
-    <style>
-        body {
-            background-color: #024348;
-            color: white;
-        }
-
-        .txtArea {
-            height: 40vh;
-            width: 90vw;
-            margin-left: 5vw;
-            margin-top: -2vh;
-        }
-
-        label {
-            height: 20vh;
-            width: 90vw;
-            margin-left: 5vw;
-        }
-
-        .annon {
-            text-align: center;
-            margin-top: 5%;
-            font-family: Roboto;
-            font-size: 2rem;
-        }
-
-        .question {
-            text-align: center;
-            margin-top: 5%;
-            margin-bottom: 10%;
-            font-family: Fredoka One;
-            font-size: 5rem;
-        }
-
-        .btns {
-            margin-top: 5%;
-            display: flex;
-            justify-content: space-around;
-        }
-
-    </style>
+  <title>webform</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <script src="https://www.gstatic.com/firebasejs/5.2.0/firebase.js"></script>
+  <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+  <script src="js/three.min.js"></script>
+  <script src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/9353/Detector.js"></script>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+  <script type="text/javascript" src="index.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/5.2.0/firebase.js"></script>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Tangerine">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
 </head>
+  
+<style>
+  body {
+    background-color: #024348;
+    color: white;
+  }
+
+  .txtArea {
+    height: 35vh;
+    width: 90vw;
+    margin-left: 5vw;
+    margin-top: -2vh;
+  }
+
+  label {
+    height: 20vh;
+    width: 90vw;
+    margin-left: 5vw;
+  }
+
+  .annon {
+    text-align: center;
+    margin-top: 5%;
+    font-family: Roboto;
+    font-size: 2rem;
+  }
+
+  .question {
+    text-align: center;
+    margin-top: 5%;
+    margin-bottom: 10%;
+    font-family: Fredoka One;
+    font-size: 5rem;
+  }
+
+  .btns {
+    margin-top: 5%;
+    display: flex;
+    justify-content: space-around;
+  }
+
+  /* Popup submission successful */
+
+  /* The Modal (background) */
+
+  .modal {
+    display: none;
+    position: fixed;
+    z-index: 1;
+    padding-top: 100px;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+    background-color: rgb(0, 0, 0);
+    background-color: rgba(0, 0, 0, 0.4);
+  }
+
+  /* Modal Content */
+
+  .modal-content {
+    background-color: lightgreen;
+    margin: auto;
+    margin-top: 20vh;
+    padding: 20px;
+    border: 1px solid #888;
+    width: 80%;
+  }
+
+  .modal-text {
+    text-align: center;
+    color: white;
+    font-family: Roboto;
+    font-size: 4rem;
+  }
+
+  /* The Close Button */
+
+  .close {
+    color: #aaaaaa;
+    float: right;
+    font-size: 28px;
+    font-weight: bold;
+  }
+
+  .close:hover,
+  .close:focus {
+    color: #000;
+    text-decoration: none;
+    cursor: pointer;
+  }
+</style>
+
 <body>
-<div class="container">
+  <div class="container">
     <div class="row">
-        <div class="col-12 annon">
-            You are Anonymous!
-        </div>
+      <div class="col-12 annon">
+        You are Anonymous!
+      </div>
     </div>
-</div>
-<div>
+  </div>
+  <div>
     <label class="question">Example textarea</label>
-</div>
-<div class="align-self-center">
-    <textarea class="form-control txtArea" id="textArea" rows="3"></textarea>
-</div>
-<div class="container btns">
-    <div class="row">
-        <div class="col-6">
-            <div>
-                <button id="skipQ" class="btn primary-button" onclick="">Skip To Next</button>
-            </div>
-        </div>
-        <div class="col-6">
-            <div>
-                <button id="submit" class="btn primary-button" onclick="submitClick()">Submit</button>
-            </div>
-        </div>
+  </div>
+  <!-- The Modal -->
+  <div id="myModal" class="modal">
+
+    <!-- Modal content -->
+    <div class="modal-content">
+      <span class="close">&times;</span>
+      <div class="modal-text">
+        Submitted Successfully
+      </div>
     </div>
-</div>
+
+  </div>
+  <div class="align-self-center">
+    <textarea class="form-control txtArea" id="textArea" rows="3"></textarea>
+  </div>
+  <div class="container btns">
+    <div class="row">
+      <div class="col-6">
+        <div>
+          <button id="skipQ" class="btn btn-warning" onclick="">Skip To Next</button>
+        </div>
+      </div>
+      <div class="col-6">
+        <div>
+          <button id="submit" class="btn btn btn-success" onclick="submitClick()">Submit</button>
+        </div>
+      </div>
+    </div>
+  </div>
 </body>
 
 
@@ -111,6 +169,14 @@
 
 
 <script>
+  var span = document.getElementsByClassName("close")[0];
+  var modal = document.getElementById('myModal');
+
+  if (/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent)) {
+    $(".modal-text").css("font-size", "30px");
+    $('label').css("font-size", "30px")
+  }
+
   var questions = [
     ["secrets", "What is your darkest secret?"],
     ["fears", "What is your greatest fear?"],
@@ -122,29 +188,50 @@
   //set the default one
   $('label').text(questions[i][1]);
   //skip message on click
-  $('#skipQ').click(function () {
+  $('#skipQ').click(function() {
     i++;
     $('label').text(questions[i % 4][1]);
   });
 
+  //firebase submission
   var firebaseRef = firebase.database().ref();
+
   function submitClick() {
     var userID = parseInt(Math.random() * 9999999999);
     var userInput = $('#textArea').val();
-    firebaseRef.child(questions[i % 4][0] + "/" + userID).set(userInput);
+    if (userInput != "") {
+      firebaseRef.child(questions[i % 4][0] + "/" + userID).set(userInput);
+      $(".modal-text").text("Submitted Successfully");
+      $(".modal-content").css("background-color", "lightgreen");
+    } else {
+      $(".modal-text").text("Submission Failed. No input detected.");
+      $(".modal-content").css("background-color", "red");
+      i--;
+    }
+
+    modal.style.display = "block";
+    $('#textArea').val("");
+
+    i++;
+    if (i % 4 != 0) {
+      $('label').text(questions[i % 4][1]);
+    } else {
+      //$(".modal-text").css("font-size", "30px");
+      $(".modal-text").text("You'r all done. You may close the window now!");
+    }
+
   }
 
-  //********THIS IS HOW TO GET UPDATES WHEN THEY COME
-  // var firebaseRefSecret = firebase.database().ref().child("secrets/");
-  // var firebaseRefFears = firebase.database().ref().child("fears/");
-  // var firebaseRefHopes = firebase.database().ref().child("hopes/");
-  // var firebaseRefHappiness = firebase.database().ref().child("happiness/");
-  // firebaseRefSecret.on('value', function (snap) {
-  //   console.log(snap.val());
-  // });
+  //popup window
+  span.onclick = function() {
+    modal.style.display = "none";
+  }
 
-
+  window.onclick = function(event) {
+    if (event.target == modal) {
+      modal.style.display = "none";
+    }
+  }
 </script>
 
 </html>
-
